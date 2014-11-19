@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>jQuery Plugin Github Commits</title>
+
+		<link rel="stylesheet" type="text/css" href="./css/style.css"></style>
+
+		<script type="text/JavaScript" src="./js/jquery-2.1.1.min.js"></script>
+		<script type="text/JavaScript" src="./js/Github.js"></script>
+	</head>
+	<body>
+		<h1>GithubCommits.js</h1>
+		<div class="container description">
+		</div>
+		<div class="container">
+			<h3>Commits eines Projektes auf Github</h3>
+			<div class="border padding">
+			</div>
+		</div>
+
+		<div class="footer container">
+			<p>
+				&copy; 2014 <a href="http://www.mliebgott.de" target="_blank" title="mliebgott.de">mliebgott.de</a>
+			</p>
+		</div>
+
+		<script type="text/JavaScript">
+			$.Github.getCommits("mliebgott-de", "formvalidation");
+			//$.Github.getUser("mliebgott-de");
+		</script>
+	</body>
+</html>
