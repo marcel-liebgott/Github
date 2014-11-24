@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>jQuery Plugin Github Commits</title>
+		<title>jQuery Plugin Github</title>
 
 		<link rel="stylesheet" type="text/css" href="./css/style.css"></style>
 
@@ -10,12 +10,29 @@
 		<script type="text/JavaScript" src="./js/Github.js"></script>
 	</head>
 	<body>
-		<h1>GithubCommits.js</h1>
+		<h1>Github.js</h1>
 		<div class="container description">
 		</div>
 		<div class="container">
-			<h3>Commits eines Projektes auf Github</h3>
-			<div class="border padding">
+			<h3>User, Repositories und Commits auf Github</h3>
+			<div class="border padding" id="info">
+				<h2>
+					<a id="user_url">
+						<span id="user_login"></span>
+					</a>
+				</h2>
+				<div id="user">
+					<img id="user_avatar">
+					<p id="user_info"></p>
+				</div>
+				<br>
+				<h2>Repositories</h2>
+				<div id="repos"></div>
+				<br>
+				<h2 id="repo_name"></h2>
+				<ul id="commit">
+
+				</ul>
 			</div>
 		</div>
 
@@ -26,8 +43,9 @@
 		</div>
 
 		<script type="text/JavaScript">
-			$.Github.getCommits("mliebgott-de", "formvalidation");
-			//$.Github.getUser("mliebgott-de");
+			$.Github.getCommits("mliebgott-de", "Github");
+			$.Github.getRepositories("mliebgott-de");
+			$.Github.getUser("mliebgott-de");
 		</script>
 	</body>
 </html>

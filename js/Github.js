@@ -21,44 +21,44 @@
 		 * @param {String} brance
 		 * @return {Array} commits
 		 */
-		getCommits: function(user, repo, branche = ''){
+		getCommits: function(user, repo, branche){
 			var _branche = '';
 
 			if(typeof branche !== "undefined" && branche !== null && branche !== ""){
-				branche = '?sha=' + branche;
+				_branche = '?sha=' + branche;
+			}else{
+				_branche = '';
 			}
+
 			$.ajax({
-				url: "https://api.github.com/repos/" + user + "/" + repo + "/commits" + branche, 
-				dataType: 'jsonp',
+				url: "https://api.github.com/repos/" + user + "/" + repo + "/commits" + _branche, 
 				success: function(result){
-					if(typeof result.data !== "undefined"){
-						$.each(result.data, function(key, value){
-console.log(value);
-							var sha = value.sha;
-							var url = value.html_url;
-							
-							$.each(value.commit, function(c_key, c_value){
-								var date = c_value.date;
-								var email = c_value.email;
-								var name = c_value.name;
-
-								var msg = c_value.message;
-
-								var commit = {
-									sha: sha,
-									url: url,
-									date: date,
-									email: email,
-									name: name,
-									msg: msg
-								};
-					
-								commits.push(commit);
-							});
+					if(typeof result !== "undefined"){
+						$.each(result, function(key, value){
+							$('#repo_name').html(repo);
+							$('#commit').append("<li><span id='key'>Sha: </span>" + value.sha + "</li>");
+							$('#commit').append("<li><span id='key'>Datum: </span>" + value.commit.author.date + "</li>");
+							$('#commit').append("<li><span id='key'>URL: </span>" + value.html_url + "</li>");
+							$('#commit').append("<li><span id='key'>E-Mail:</span>" + value.commit.author.email + "</li>");
+							$('#commit').append("<li><span id='key'>Name: </span>" + value.commit.author.name + "</li>");
+							$('#commit').append("<li><span id='key'>Nachricht: </span>" + value.commit.message + "</li>");
 						});
 					}
+				}
+			});
+		},
 
-					console.log(commits);
+		getRepositories: function(user){
+			$.ajax({
+				url:  'https://api.github.com/users/' + user + '/repos',
+				success: function(result){
+					var html = "";
+
+					$.each(result, function(key, value){
+						html += "<a id='repo' href='" + value.html_url + "' title='" + value.name + "'>" + value.name + "</a>";
+					});
+
+					$('#repos').html(html);
 				}
 			});
 		},
@@ -70,16 +70,17 @@ console.log(value);
 		 * get githib user
 		 *
 		 * @param {String} user name
-		 * @return {Array} user
 		 */
 		getUser: function(user){
 			$.ajax({
 				url: "https://api.github.com/users/" + user,
-				dataType: "jsonp",
 				success: function(data){
-					console.log(data);
+					$('#user_avatar').attr('src', data.avatar_url);
+					$('#user_login').html(data.login);
+					$('#user_url').attr('href', data.html_url);
+					$('#user_info').html("Follower: " + data.followers + "<br>Following: " + data.following + "<br>Repositories: " + data.public_repos);
 				}
 			});
 		}
-	}
+	};
 })(jQuery);
