@@ -95,8 +95,12 @@ input{
 	top: 0;
 }
 
-ul#commit{
+ul{
 	list-style-type: none;
+}
+
+#last{
+	margin-bottom: 15px;
 }
 
 #key{

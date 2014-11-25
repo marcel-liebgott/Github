@@ -7,8 +7,6 @@
  * @require jQuery
  */
 (function($){
-	var commits = [];
-
 	$.Github = {
 		/**
 		 * @author Marcel Liebgott <marcel@mliebgott.de>
@@ -41,13 +39,21 @@
 							$('#commit').append("<li><span id='key'>URL: </span>" + value.html_url + "</li>");
 							$('#commit').append("<li><span id='key'>E-Mail:</span>" + value.commit.author.email + "</li>");
 							$('#commit').append("<li><span id='key'>Name: </span>" + value.commit.author.name + "</li>");
-							$('#commit').append("<li><span id='key'>Nachricht: </span>" + value.commit.message + "</li>");
+							$('#commit').append("<li id='last'><span id='key'>Nachricht: </span>" + value.commit.message + "</li>");
 						});
 					}
 				}
 			});
 		},
 
+		/**
+		 * @author Marcel Liebgott <marcel@mliebgott.de>
+		 * @since 1.00
+		 *
+		 * list of all repositories of this user
+		 *
+		 * @param {String} user
+		 */
 		getRepositories: function(user){
 			$.ajax({
 				url:  'https://api.github.com/users/' + user + '/repos',
@@ -79,6 +85,27 @@
 					$('#user_login').html(data.login);
 					$('#user_url').attr('href', data.html_url);
 					$('#user_info').html("Follower: " + data.followers + "<br>Following: " + data.following + "<br>Repositories: " + data.public_repos);
+				}
+			});
+		},
+
+		/**
+		 * @author Marcel Liebgott <marcel@mliebgott.de>
+		 * @since 1.00
+		 *
+		 * get the milestone of {@see repo}
+		 *
+		 * @param {String} user
+		 * @param {String} repository
+		 */
+		getMilestone: function(user, repo){
+			$.ajax({
+				url: "https://api.github.com/repos/" + user + "/" + repo + "/milestones",
+				success: function(data){
+					$('#milestone_repo_name').html(repo);
+					$('#milestone').append("<li>Milestone: " + data[0].title + "</li>");
+					$('#milestone').append("<li>Open Issues: " + data[0].open_issues + "</li>");
+					console.log(data);
 				}
 			});
 		}

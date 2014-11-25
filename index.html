@@ -30,9 +30,9 @@
 				<div id="repos"></div>
 				<br>
 				<h2 id="repo_name"></h2>
-				<ul id="commit">
-
-				</ul>
+				<ul id="commit"></ul>
+				<h2 id="milestone_repo_name"></h2>
+				<ul id="milestone"></ul>
 			</div>
 		</div>
 
@@ -46,6 +46,7 @@
 			$.Github.getCommits("mliebgott-de", "Github");
 			$.Github.getRepositories("mliebgott-de");
 			$.Github.getUser("mliebgott-de");
+			$.Github.getMilestone("script-solution", "Boardsolution");
 		</script>
 	</body>
 </html>
